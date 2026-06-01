@@ -5,12 +5,14 @@
 用法: python3 server.py [端口]
 """
 
-import sqlite3, json, os, sys
+import sqlite3, json, os, sys, re
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from pathlib import Path
+import mimetypes
 
 DB_PATH = Path(__file__).parent / "tcm_knowledge.db"
+SCREENSHOTS_DIR = Path(__file__).parent / "screenshots"
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 
 def get_db():
@@ -129,7 +131,13 @@ def api_detail(table, id):
     conn = get_db()
     row = conn.execute(f"SELECT * FROM {table} WHERE id = ?", (id,)).fetchone()
     conn.close()
-    return dict_row(row)
+    d = dict_row(row)
+    if not d: return None
+    long_fields = ['content','commentary','bencao_raw','herbal_rx','notes','inquiry','indication','description']
+    for k in long_fields:
+        if k in d and d[k]:
+            d[k + '_html'] = render_markdown(d[k])
+    return d
 
 def api_stats():
     """统计信息"""
@@ -145,6 +153,38 @@ def api_stats():
             stats[t] = 0
     conn.close()
     return stats
+
+
+def render_markdown(text):
+    """Markdown + 截图路径 转 HTML"""
+    if not text: return ''
+    # 1. 截图路径：assets/screenshots/xxx.webp -> <img>
+    def fix_screenshot_path(m):
+        path = m.group(1)
+        fname = path.split('screenshots/')[-1]
+        return f'<img src="/screenshots/{fname}" alt="截图" style="max-width:100%;border-radius:6px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1);" loading="lazy">'
+    text = re.sub(r'(?:截图路径[：:]\s*)?assets/screenshots/(\S+\.webp)', 
+                  lambda m: f'<img src="/screenshots/{m.group(1)}" alt="截图" style="max-width:100%;border-radius:6px;margin:8px 0;box-shadow:0 2px 8px rgba(0,0,0,0.1);" loading="lazy">', 
+                  text)
+    # 2. Markdown 图片 ![alt](url)
+    def fix_img(m):
+        alt, path = m.group(1), m.group(2)
+        if 'screenshots/' in path:
+            fname = path.split('screenshots/')[-1]
+            return f'<img src="/screenshots/{fname}" alt="{alt}" style="max-width:100%;border-radius:6px;margin:8px 0;" loading="lazy">'
+        return f'<img src="{path}" alt="{alt}" style="max-width:100%;">'
+    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', fix_img, text)
+    # 3. 粗体
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    # 4. 标题
+    text = re.sub(r'^### (.+)$', r'<h4 style="margin:12px 0 6px;color:#8b7355;">\1</h4>', text, flags=re.MULTILINE)
+    text = re.sub(r'^## (.+)$', r'<h3 style="margin:16px 0 8px;color:#5b4a3f;">\1</h3>', text, flags=re.MULTILINE)
+    text = re.sub(r'^# (.+)$', r'<h2 style="margin:20px 0 10px;">\1</h2>', text, flags=re.MULTILINE)
+    # 5. 引用
+    text = re.sub(r'^> (.+)$', r'<blockquote style="border-left:3px solid #c9b99a;padding-left:12px;color:#666;margin:8px 0;">\1</blockquote>', text, flags=re.MULTILINE)
+    # 6. 换行
+    text = text.replace('\n', '<br>')
+    return text
 
 def api_filter_options(table, column):
     """获取筛选选项"""
@@ -499,6 +539,21 @@ class TCMHandler(BaseHTTPRequestHandler):
         path = parsed.path
         params = parse_qs(parsed.query)
         
+        # 截图静态文件服务
+        if path.startswith('/screenshots/'):
+            rel = path[len('/screenshots/'):]
+            file_path = SCREENSHOTS_DIR / rel
+            if file_path.exists() and file_path.is_file():
+                self.send_response(200)
+                self.send_header('Content-Type', 'image/webp')
+                self.send_header('Cache-Control', 'max-age=86400')
+                self.end_headers()
+                with open(file_path, 'rb') as f:
+                    self.wfile.write(f.read())
+            else:
+                self.send_error(404)
+            return
+        
         try:
             if path == '/' or path == '/index.html':
                 self.send_response(200)
@@ -546,6 +601,7 @@ if __name__ == '__main__':
     print(f"🏥 倪海厦中医知识数据库 - Web 界面")
     print(f"   地址: http://localhost:{PORT}")
     print(f"   数据库: {DB_PATH}")
+    print(f"   截图: {SCREENSHOTS_DIR}")
     print(f"   按 Ctrl+C 停止\n")
     server = HTTPServer(('0.0.0.0', PORT), TCMHandler)
     server.serve_forever()

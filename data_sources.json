@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "created": "2026-06-01",
+  "description": "倪海厦中医知识数据库 - 数据来源记录",
+  "sources": [
+    {
+      "repo": "9527qingfeng/hantang-nihaixia-follower",
+      "url": "https://github.com/9527qingfeng/hantang-nihaixia-follower",
+      "stars": 280,
+      "license": "MulanPSL-2.0",
+      "description": "倪海厦外门弟子整理，人纪系列教材讲义 + 笔记",
+      "contributions": {
+        "herbs": 349,
+        "formulas": 102,
+        "classics": 113,
+        "clinical_cases": 708,
+        "lectures": 42,
+        "tianji": 181,
+        "folk_formulas": 17
+      }
+    },
+    {
+      "repo": "JuneYaooo/nihaixia",
+      "url": "https://github.com/JuneYaooo/nihaixia",
+      "stars": 90,
+      "license": null,
+      "description": "倪海厦中医课程 Agent Skill，结构化蒸馏笔记",
+      "contributions": {
+        "course_notes": 46,
+        "formulas_structured": 58,
+        "symptoms_structured": 19,
+        "syndromes_structured": 6
+      }
+    },
+    {
+      "repo": "nivance/nihaixia-kb",
+      "url": "https://github.com/nivance/nihaixia-kb",
+      "stars": 3,
+      "license": null,
+      "description": "倪海厦知识库，wiki结构，1981个结构化医案",
+      "contributions": {
+        "clinical_cases": 679,
+        "symptoms": 708,
+        "acupoints": 47,
+        "herbs_supplement": 52,
+        "syndromes_pathomechanism": 188,
+        "treatment_methods": 119,
+        "formulas_supplement": 39,
+        "course_notes_theory": 37,
+        "lectures_supplement": 39,
+        "acupuncture_notes": 7
+      }
+    },
+    {
+      "repo": "jangviktor-web/nihaixia",
+      "url": "https://github.com/jangviktor-web/nihaixia",
+      "stars": 32,
+      "license": null,
+      "description": "倪海厦视角的中医Agent Skill，按病种分类医案",
+      "contributions": {
+        "clinical_cases": 62,
+        "course_notes": 9
+      }
+    },
+    {
+      "repo": "elliott10/ebook-nihaixia",
+      "url": "https://github.com/elliott10/ebook-nihaixia",
+      "stars": 22,
+      "license": null,
+      "description": "倪海厦笔记与书籍PDF",
+      "contributions": {
+        "books_pdf": 11,
+        "tianji_pdf": 4
+      }
+    },
+    {
+      "repo": "wdsheng999/hantang_medicine",
+      "url": "https://github.com/wdsheng999/hantang_medicine",
+      "stars": 2,
+      "license": null,
+      "description": "倪师人纪五部跟学笔记，针灸经络详细笔记",
+      "contributions": {
+        "course_notes": 17
+      }
+    },
+    {
+      "repo": "privateheart/renji",
+      "url": "https://github.com/privateheart/renji",
+      "stars": 8,
+      "license": null,
+      "description": "倪海厦人纪学习笔记",
+      "contributions": {
+        "course_notes": 5
+      }
+    }
+  ],
+  "skipped_repos": [
+    {
+      "repo": "Anita-Mul/nihaisha",
+      "reason": "PDF内容与已有md完全重复"
+    },
+    {
+      "repo": "jcold/hantang",
+      "reason": "英文官网镜像，非倪师教学内容"
+    },
+    {
+      "repo": "lihuacatnb/Nihaixia-FaceReading-Annotations",
+      "reason": "只有README，无实际内容"
+    },
+    {
+      "repo": "qintao0203/nihaixia",
+      "reason": "只有README"
+    },
+    {
+      "repo": "bz5fang/chinese-medicine",
+      "reason": "非倪海厦专属内容"
+    }
+  ]
+}

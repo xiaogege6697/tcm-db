@@ -130,13 +130,117 @@ def api_detail(table, id):
     """查看详情"""
     conn = get_db()
     row = conn.execute(f"SELECT * FROM {table} WHERE id = ?", (id,)).fetchone()
-    conn.close()
     d = dict_row(row)
-    if not d: return None
+    if not d:
+        conn.close()
+        return None
     long_fields = ['content','commentary','bencao_raw','herbal_rx','notes','inquiry','indication','description']
     for k in long_fields:
         if k in d and d[k]:
             d[k + '_html'] = render_markdown(d[k])
+
+    # 获取关联数据
+    d['_relations'] = {}
+
+    if table == 'formulas':
+        # 方剂的药物
+        rows = conn.execute('''
+            SELECT h.id, h.name, h.nature, h.flavor, fh.role
+            FROM formula_herbs fh
+            JOIN herbs h ON fh.herb_id = h.id
+            WHERE fh.formula_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['herbs'] = [{'id': r[0], 'name': r[1], 'nature': r[2], 'flavor': r[3], 'role': r[4]} for r in rows]
+
+        # 方剂的证型
+        rows = conn.execute('''
+            SELECT s.id, s.name, s.six_channel
+            FROM formula_syndromes fs
+            JOIN syndromes s ON fs.syndrome_id = s.id
+            WHERE fs.formula_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['syndromes'] = [{'id': r[0], 'name': r[1], 'six_channel': r[2]} for r in rows]
+
+    elif table == 'syndromes':
+        # 证型的方剂
+        rows = conn.execute('''
+            SELECT f.id, f.name, f.source_book
+            FROM formula_syndromes fs
+            JOIN formulas f ON fs.formula_id = f.id
+            WHERE fs.syndrome_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['formulas'] = [{'id': r[0], 'name': r[1], 'source_book': r[2]} for r in rows]
+
+        # 证型的症状
+        rows = conn.execute('''
+            SELECT s.id, s.name, s.category
+            FROM syndrome_symptoms ss
+            JOIN symptoms s ON ss.symptom_id = s.id
+            WHERE ss.syndrome_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['symptoms'] = [{'id': r[0], 'name': r[1], 'category': r[2]} for r in rows]
+
+    elif table == 'clinical_cases':
+        # 医案的方剂
+        rows = conn.execute('''
+            SELECT f.id, f.name, f.source_book
+            FROM case_formulas cf
+            JOIN formulas f ON cf.formula_id = f.id
+            WHERE cf.case_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['formulas'] = [{'id': r[0], 'name': r[1], 'source_book': r[2]} for r in rows]
+
+        # 医案的药物
+        rows = conn.execute('''
+            SELECT h.id, h.name, h.nature, h.flavor
+            FROM case_herbs ch
+            JOIN herbs h ON ch.herb_id = h.id
+            WHERE ch.case_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['herbs'] = [{'id': r[0], 'name': r[1], 'nature': r[2], 'flavor': r[3]} for r in rows]
+
+    elif table == 'herbs':
+        # 药物的方剂
+        rows = conn.execute('''
+            SELECT f.id, f.name, f.source_book, fh.role
+            FROM formula_herbs fh
+            JOIN formulas f ON fh.formula_id = f.id
+            WHERE fh.herb_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['formulas'] = [{'id': r[0], 'name': r[1], 'source_book': r[2], 'role': r[3]} for r in rows]
+
+        # 药物的医案
+        rows = conn.execute('''
+            SELECT c.id, c.patient_id, c.chief_complaint
+            FROM case_herbs ch
+            JOIN clinical_cases c ON ch.case_id = c.id
+            WHERE ch.herb_id = ?
+            LIMIT 20
+        ''', (id,)).fetchall()
+        d['_relations']['cases'] = [{'id': r[0], 'patient_id': r[1], 'chief_complaint': r[2]} for r in rows]
+
+    elif table == 'symptoms':
+        # 症状的证型
+        rows = conn.execute('''
+            SELECT s.id, s.name, s.six_channel
+            FROM syndrome_symptoms ss
+            JOIN syndromes s ON ss.syndrome_id = s.id
+            WHERE ss.symptom_id = ?
+        ''', (id,)).fetchall()
+        d['_relations']['syndromes'] = [{'id': r[0], 'name': r[1], 'six_channel': r[2]} for r in rows]
+
+    elif table == 'courses':
+        # 课程的笔记
+        rows = conn.execute('''
+            SELECT cn.id, cn.title, cn.note_type, cn.module_name
+            FROM course_course_notes ccn
+            JOIN course_notes cn ON ccn.note_id = cn.id
+            WHERE ccn.course_id = ?
+            ORDER BY cn.note_type, cn.title
+        ''', (id,)).fetchall()
+        d['_relations']['course_notes'] = [{'id': r[0], 'title': r[1], 'note_type': r[2], 'module_name': r[3]} for r in rows]
+
+    conn.close()
     return d
 
 def api_stats():
@@ -192,6 +296,84 @@ def api_filter_options(table, column):
     rows = conn.execute(f"SELECT DISTINCT {column} FROM {table} WHERE {column} IS NOT NULL AND {column} != '' ORDER BY {column}").fetchall()
     conn.close()
     return [r[0] for r in rows]
+
+def api_export_table(table, format='json'):
+    """导出整个表的数据"""
+    conn = get_db()
+    rows = conn.execute(f"SELECT * FROM {table}").fetchall()
+    conn.close()
+
+    data = []
+    for row in rows:
+        d = dict_row(row)
+        # 移除内部字段
+        d.pop('_relations', None)
+        data.append(d)
+
+    if format == 'csv':
+        if not data:
+            return ''
+        # CSV 格式
+        import csv
+        import io
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
+        return output.getvalue()
+    else:
+        # JSON 格式
+        return data
+
+def api_export_search(query, format='json'):
+    """导出搜索结果"""
+    conn = get_db()
+    results = []
+
+    # 搜索多个表
+    tables_to_search = [
+        ('herbs', 'name', 'category'),
+        ('formulas', 'name', 'source_book'),
+        ('symptoms', 'name', 'category'),
+        ('syndromes', 'name', 'six_channel'),
+        ('acupoints', 'name', 'meridian'),
+        ('clinical_cases', 'patient_id', 'chief_complaint'),
+        ('course_notes', 'title', 'content'),
+    ]
+
+    for table, name_col, desc_col in tables_to_search:
+        try:
+            rows = conn.execute(f'''
+                SELECT id, {name_col}, {desc_col}
+                FROM {table}
+                WHERE {name_col} LIKE ? OR {desc_col} LIKE ?
+                LIMIT 100
+            ''', (f'%{query}%', f'%{query}%')).fetchall()
+
+            for row in rows:
+                results.append({
+                    'table': table,
+                    'id': row[0],
+                    'name': row[1],
+                    'description': (row[2] or '')[:200]
+                })
+        except:
+            pass
+
+    conn.close()
+
+    if format == 'csv':
+        if not results:
+            return ''
+        import csv
+        import io
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=['table', 'id', 'name', 'description'])
+        writer.writeheader()
+        writer.writerows(results)
+        return output.getvalue()
+    else:
+        return results
 
 # ============================================================
 # HTML 模板
@@ -260,6 +442,10 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 .detail-panel .field-label { font-size:12px; color:#888; margin-bottom:2px; }
 .detail-panel .field-value { font-size:14px; line-height:1.7; }
 .detail-panel .field-value pre { white-space:pre-wrap; font-family:inherit; background:#f9f7f3; padding:12px; border-radius:6px; max-height:300px; overflow-y:auto; }
+.detail-panel .tag { display:inline-block; background:#f0ebe3; color:#6b5b4a; padding:3px 10px; border-radius:12px; margin:2px 4px; font-size:13px; cursor:pointer; transition:all 0.2s; border:1px solid #d4c9b8; }
+.detail-panel .tag:hover { background:#8b7355; color:#fff; border-color:#8b7355; }
+.detail-panel .case-link { padding:6px 10px; margin:4px 0; background:#faf8f5; border-radius:6px; cursor:pointer; font-size:13px; border-left:3px solid #c9b99a; transition:all 0.2s; }
+.detail-panel .case-link:hover { background:#f0ebe3; border-left-color:#8b7355; }
 
 /* 分页 */
 .pagination { display:flex; justify-content:center; gap:8px; margin:20px 0; }
@@ -293,6 +479,11 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   
   <div class="tabs" id="tabs"></div>
   <div class="filters" id="filters"></div>
+  <div class="export-buttons" id="exportButtons" style="margin:10px 0; display:none;">
+    <span style="color:#888; font-size:13px;">导出：</span>
+    <button onclick="exportCurrentTable('json')" style="padding:4px 12px; background:#8b7355; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:12px;">JSON</button>
+    <button onclick="exportCurrentTable('csv')" style="padding:4px 12px; background:#6b8e6b; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:12px;">CSV</button>
+  </div>
   <div class="results" id="results"></div>
   <div class="pagination" id="pagination"></div>
 </div>
@@ -402,6 +593,27 @@ async function loadBrowse() {
   for (const [k,v] of Object.entries(currentFilters)) params.set(k,v);
   const data = await api('browse?' + params);
   renderResults(data.data, data.total, data.page, data.per_page);
+
+  // 显示导出按钮
+  const exportBtn = document.getElementById('exportButtons');
+  if (currentTable) {
+    exportBtn.style.display = 'block';
+  } else {
+    exportBtn.style.display = 'none';
+  }
+}
+
+function exportCurrentTable(format) {
+  if (!currentTable) return;
+  const url = `/api/export/${currentTable}?format=${format}`;
+  window.open(url, '_blank');
+}
+
+function exportSearchResults(format) {
+  const kw = document.getElementById('searchInput').value.trim();
+  if (!kw) return;
+  const url = `/api/export/search?q=${encodeURIComponent(kw)}&format=${format}`;
+  window.open(url, '_blank');
 }
 
 function renderResults(items, total, page, perPage) {
@@ -450,25 +662,80 @@ function goPage(p) { currentPage = p; loadBrowse(); }
 async function showDetail(table, id) {
   const item = await api(`detail/${table}/${id}`);
   if (!item) return;
-  
+
   const panel = document.getElementById('detailPanel');
   const content = document.getElementById('detailContent');
   const label = TABLE_LABELS[table] || table;
-  
+
   let html = `<h2>${item.name || item.title || item.patient_id || item.chapter_name || '详情'}</h2>`;
-  
-  const SKIP = new Set(['id','raw_path','source_repo','word_count']);
-  const LONG = new Set(['content','commentary','bencao_raw','herbal_rx','notes','inquiry','indication','description']);
-  
+
+  const SKIP = new Set(['id','raw_path','source_repo','word_count','_relations']);
+  const LONG = new Set(['content','commentary','bencao_raw','herbal_rx','notes','inquiry','indication','description','acupuncture_rx','diagnosis','pulse_diagnosis','tongue_diagnosis','eye_diagnosis']);
+  // 收集有 _html 版本的字段名，后面跳过原始字段
+  const hasHtml = new Set();
+  for (const k of Object.keys(item)) {
+    if (k.endsWith('_html') && item[k]) hasHtml.add(k.replace(/_html$/, ''));
+  }
+
   for (const [k, v] of Object.entries(item)) {
     if (SKIP.has(k) || !v) continue;
-    const isLong = LONG.has(k);
+    // 跳过有 _html 版本的原始字段（如 content，因为 content_html 会替代它）
+    if (hasHtml.has(k)) continue;
+    // _html 字段直接渲染为 HTML，标签名去掉 _html 后缀
+    const isHtmlField = k.endsWith('_html');
+    const displayName = isHtmlField ? k.replace(/_html$/, '') : k;
+    const isLong = isHtmlField || LONG.has(k);
     html += `<div class="field">
-      <div class="field-label">${k}</div>
-      <div class="field-value">${isLong ? '<pre>'+v+'</pre>' : v}</div>
+      <div class="field-label">${displayName}</div>
+      <div class="field-value">${isHtmlField ? v : (isLong ? '<pre>'+v+'</pre>' : v)}</div>
     </div>`;
   }
-  
+
+  // 渲染关联数据
+  const rel = item._relations || {};
+  if (rel.herbs && rel.herbs.length) {
+    html += `<div class="field"><div class="field-label">💊 相关药物 (${rel.herbs.length})</div><div class="field-value">`;
+    html += rel.herbs.map(h =>
+      `<span class="tag" onclick="showDetail('herbs',${h.id})" title="${h.nature||''} ${h.flavor||''}">${h.name}${h.role && h.role !== '未知' ? '('+h.role+')' : ''}</span>`
+    ).join(' ');
+    html += `</div></div>`;
+  }
+  if (rel.formulas && rel.formulas.length) {
+    html += `<div class="field"><div class="field-label">📋 相关方剂 (${rel.formulas.length})</div><div class="field-value">`;
+    html += rel.formulas.map(f =>
+      `<span class="tag" onclick="showDetail('formulas',${f.id})" title="${f.source_book||''}">${f.name}</span>`
+    ).join(' ');
+    html += `</div></div>`;
+  }
+  if (rel.syndromes && rel.syndromes.length) {
+    html += `<div class="field"><div class="field-label">🔍 相关证型 (${rel.syndromes.length})</div><div class="field-value">`;
+    html += rel.syndromes.map(s =>
+      `<span class="tag" onclick="showDetail('syndromes',${s.id})" title="${s.six_channel||''}">${s.name}</span>`
+    ).join(' ');
+    html += `</div></div>`;
+  }
+  if (rel.symptoms && rel.symptoms.length) {
+    html += `<div class="field"><div class="field-label">🩺 相关症状 (${rel.symptoms.length})</div><div class="field-value">`;
+    html += rel.symptoms.map(s =>
+      `<span class="tag" onclick="showDetail('symptoms',${s.id})" title="${s.category||''}">${s.name}</span>`
+    ).join(' ');
+    html += `</div></div>`;
+  }
+  if (rel.cases && rel.cases.length) {
+    html += `<div class="field"><div class="field-label">📖 相关医案 (${rel.cases.length})</div><div class="field-value">`;
+    html += rel.cases.map(c =>
+      `<div class="case-link" onclick="showDetail('clinical_cases',${c.id})">${c.patient_id}: ${(c.chief_complaint||'').substring(0,60)}</div>`
+    ).join('');
+    html += `</div></div>`;
+  }
+  if (rel.course_notes && rel.course_notes.length) {
+    html += `<div class="field"><div class="field-label">📚 课程资料 (${rel.course_notes.length})</div><div class="field-value">`;
+    html += rel.course_notes.map(n =>
+      `<div class="case-link" onclick="showDetail('course_notes',${n.id})">[${n.note_type}] ${n.title}</div>`
+    ).join('');
+    html += `</div></div>`;
+  }
+
   content.innerHTML = html;
   panel.classList.add('open');
   document.getElementById('overlay').classList.add('show');
@@ -494,10 +761,32 @@ document.getElementById('searchInput').addEventListener('input', function() {
 function renderSearchResults(results) {
   const container = document.getElementById('results');
   document.getElementById('pagination').innerHTML = '';
+
+  // 显示搜索导出按钮
+  const exportBtn = document.getElementById('exportButtons');
+  if (results.length > 0) {
+    exportBtn.style.display = 'block';
+    exportBtn.innerHTML = `
+      <span style="color:#888; font-size:13px;">导出搜索结果：</span>
+      <button onclick="exportSearchResults('json')" style="padding:4px 12px; background:#8b7355; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:12px;">JSON</button>
+      <button onclick="exportSearchResults('csv')" style="padding:4px 12px; background:#6b8e6b; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:12px;">CSV</button>
+    `;
+  } else {
+    exportBtn.style.display = 'none';
+  }
+
   if (!results.length) { container.innerHTML = '<div class="loading">无结果</div>'; return; }
-  
+
+  // 类型到表名的映射
+  const TYPE_TO_TABLE = {
+    '中药': 'herbs', '方剂': 'formulas', '症状': 'symptoms',
+    '医案': 'clinical_cases', '穴位': 'acupoints', '病机': 'syndromes',
+    '治法': 'treatment_methods', '经典': 'classics', '讲座': 'lectures'
+  };
+
   container.innerHTML = results.map(item => {
     const type = item.type;
+    const table = TYPE_TO_TABLE[type] || '';
     const title = item.name || item.title || item.patient_id || item.chapter_name || '未知';
     let desc = '';
     if (type === '中药') desc = `[${item.category||''}] ${item.nature||''} ${(item.indication||'').substring(0,80)}`;
@@ -510,8 +799,8 @@ function renderSearchResults(results) {
     else if (type === '经典') desc = `${item.book_name||''} ${(item.content||'').substring(0,80)}`;
     else if (type === '讲座') desc = `${item.lecture_type||''} ${(item.content||'').substring(0,80)}`;
     else desc = JSON.stringify(item).substring(0,100);
-    
-    return `<div class="result-item">
+
+    return `<div class="result-item" ${table ? `onclick="showDetail('${table}',${item.id})"` : ''} style="${table ? 'cursor:pointer' : ''}">
       <span class="type-badge badge-${type}">${type}</span>
       <h3>${title}</h3>
       <div class="desc">${desc}</div>
@@ -583,7 +872,38 @@ class TCMHandler(BaseHTTPRequestHandler):
                 parts = path.split('/')
                 table, col = parts[3], parts[4]
                 self.send_json(api_filter_options(table, col))
-            
+
+            elif path.startswith('/api/export/'):
+                parts = path.split('/')
+                if len(parts) >= 4:
+                    target = parts[3]
+                    fmt = params.get('format', ['json'])[0]
+
+                    if target == 'search':
+                        query = params.get('q', [''])[0]
+                        if fmt == 'csv':
+                            data = api_export_search(query, 'csv')
+                            self.send_response(200)
+                            self.send_header('Content-Type', 'text/csv; charset=utf-8')
+                            self.send_header('Content-Disposition', f'attachment; filename="search_{query}.csv"')
+                            self.end_headers()
+                            self.wfile.write(data.encode('utf-8'))
+                        else:
+                            self.send_json(api_export_search(query, 'json'))
+                    else:
+                        # 导出指定表
+                        if fmt == 'csv':
+                            data = api_export_table(target, 'csv')
+                            self.send_response(200)
+                            self.send_header('Content-Type', 'text/csv; charset=utf-8')
+                            self.send_header('Content-Disposition', f'attachment; filename="{target}.csv"')
+                            self.end_headers()
+                            self.wfile.write(data.encode('utf-8'))
+                        else:
+                            self.send_json(api_export_table(target, 'json'))
+                else:
+                    self.send_error(400)
+
             else:
                 self.send_error(404)
         

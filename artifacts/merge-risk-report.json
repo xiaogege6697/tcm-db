@@ -1,6 +1,6 @@
 {
   "summary": {
-    "green": 26,
+    "green": 21,
     "yellow": 2,
     "red": 0
   },
@@ -227,70 +227,6 @@
       "risk": "green"
     },
     {
-      "name": "麻黄汤",
-      "duplicate_ids": [
-        24,
-        27,
-        31,
-        51,
-        214
-      ],
-      "canonical_id": 214,
-      "canonical_source": "nihaixia",
-      "herbs_consistent": true,
-      "dosage_prep_consistent": true,
-      "herbs_per_id": {
-        "24": 0,
-        "27": 0,
-        "31": 0,
-        "51": 0,
-        "214": 0
-      },
-      "field_conflicts": [
-        {
-          "field": "chapter",
-          "is_medical": false,
-          "canonical": null,
-          "conflict_value": "3.辨太阳病脉证并治法上篇",
-          "from_ids": [
-            24
-          ]
-        },
-        {
-          "field": "chapter",
-          "is_medical": false,
-          "canonical": null,
-          "conflict_value": "4.辨太阳病脉证并治法中篇",
-          "from_ids": [
-            27,
-            31,
-            51
-          ]
-        }
-      ],
-      "relation_counts": {
-        "per_id": {
-          "24": {},
-          "27": {},
-          "31": {},
-          "51": {},
-          "214": {
-            "formula_syndromes": 1,
-            "case_formulas": 2
-          }
-        },
-        "case_formulas_on_dup": 0,
-        "migrate_total": 0
-      },
-      "migrate_relations": 0,
-      "sources": [
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
-        "nihaixia | nihaixia/references/formula-patterns.md"
-      ],
-      "risk": "green"
-    },
-    {
       "name": "大柴胡汤",
       "duplicate_ids": [
         41,
@@ -343,102 +279,6 @@
         "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md"
       ],
       "risk": "yellow"
-    },
-    {
-      "name": "小柴胡汤",
-      "duplicate_ids": [
-        42,
-        43,
-        44,
-        230
-      ],
-      "canonical_id": 230,
-      "canonical_source": "nihaixia",
-      "herbs_consistent": true,
-      "dosage_prep_consistent": true,
-      "herbs_per_id": {
-        "42": 0,
-        "43": 0,
-        "44": 0,
-        "230": 0
-      },
-      "field_conflicts": [],
-      "relation_counts": {
-        "per_id": {
-          "42": {},
-          "43": {},
-          "44": {},
-          "230": {
-            "formula_syndromes": 1,
-            "case_formulas": 8
-          }
-        },
-        "case_formulas_on_dup": 0,
-        "migrate_total": 0
-      },
-      "migrate_relations": 0,
-      "sources": [
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
-        "nihaixia | nihaixia/references/formula-patterns.md"
-      ],
-      "risk": "green"
-    },
-    {
-      "name": "抵当汤",
-      "duplicate_ids": [
-        57,
-        59,
-        84,
-        250
-      ],
-      "canonical_id": 250,
-      "canonical_source": "nihaixia",
-      "herbs_consistent": true,
-      "dosage_prep_consistent": true,
-      "herbs_per_id": {
-        "57": 0,
-        "59": 0,
-        "84": 0,
-        "250": 0
-      },
-      "field_conflicts": [
-        {
-          "field": "chapter",
-          "is_medical": false,
-          "canonical": null,
-          "conflict_value": "5.辨太阳病脉证并治法下篇",
-          "from_ids": [
-            57,
-            59
-          ]
-        },
-        {
-          "field": "chapter",
-          "is_medical": false,
-          "canonical": null,
-          "conflict_value": "6.辨阳明病脉证并治法",
-          "from_ids": [
-            84
-          ]
-        }
-      ],
-      "relation_counts": {
-        "per_id": {
-          "57": {},
-          "59": {},
-          "84": {},
-          "250": {}
-        },
-        "case_formulas_on_dup": 0,
-        "migrate_total": 0
-      },
-      "migrate_relations": 0,
-      "sources": [
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
-        "nihaixia | nihaixia/references/formula-patterns.md"
-      ],
-      "risk": "green"
     },
     {
       "name": "四逆散",
@@ -532,38 +372,6 @@
         "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
         "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
         "nihaixia | nihaixia/references/formula-patterns.md"
-      ],
-      "risk": "green"
-    },
-    {
-      "name": "旋覆代赭石汤",
-      "duplicate_ids": [
-        65,
-        66,
-        67
-      ],
-      "canonical_id": 65,
-      "canonical_source": "hantang",
-      "herbs_consistent": true,
-      "dosage_prep_consistent": true,
-      "herbs_per_id": {
-        "65": 0,
-        "66": 0,
-        "67": 0
-      },
-      "field_conflicts": [],
-      "relation_counts": {
-        "per_id": {
-          "65": {},
-          "66": {},
-          "67": {}
-        },
-        "case_formulas_on_dup": 0,
-        "migrate_total": 0
-      },
-      "migrate_relations": 0,
-      "sources": [
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md"
       ],
       "risk": "green"
     },
@@ -690,40 +498,6 @@
       "migrate_relations": 0,
       "sources": [
         "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
-        "nihaixia | nihaixia/references/formula-patterns.md"
-      ],
-      "risk": "green"
-    },
-    {
-      "name": "乌梅丸",
-      "duplicate_ids": [
-        1,
-        265
-      ],
-      "canonical_id": 265,
-      "canonical_source": "nihaixia",
-      "herbs_consistent": true,
-      "dosage_prep_consistent": true,
-      "herbs_per_id": {
-        "1": 0,
-        "265": 9
-      },
-      "field_conflicts": [],
-      "relation_counts": {
-        "per_id": {
-          "1": {},
-          "265": {
-            "formula_herbs": 9,
-            "formula_syndromes": 1,
-            "case_formulas": 8
-          }
-        },
-        "case_formulas_on_dup": 0,
-        "migrate_total": 0
-      },
-      "migrate_relations": 0,
-      "sources": [
-        "hantang | hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/10.辨厥阴病脉证并治法.md",
         "nihaixia | nihaixia/references/formula-patterns.md"
       ],
       "risk": "green"

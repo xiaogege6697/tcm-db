@@ -320,6 +320,83 @@ def _write_merge_evidence(conn, rows_d, canon):
     return updates
 
 
+class EvidenceCollisionError(RuntimeError):
+    """evidence 迁移时 dedupe_key 碰撞且内容非完全一致——须中止，不得静默覆盖。"""
+
+
+def _migrate_one_ev(conn, ev, field, new_val):
+    """迁移单条 evidence 的指定 id 字段(旧id)→new_val(canon)：先删旧、重算 dedupe_key、再 INSERT。
+    dedupe_key 碰撞：内容完全一致→合并(保留现有，返回 'merged')；
+    内容非完全一致→raise EvidenceCollisionError（由外层事务整批 ROLLBACK，不静默覆盖）。
+    source_record_id 等历史来源字段绝对不动。返回 'migrated' | 'merged'。"""
+    old_dedupe = ev['dedupe_key']
+    new_ev = {k: v for k, v in ev.items() if k not in ('id', 'dedupe_key', 'created_at')}
+    new_ev[field] = new_val
+    new_dedupe = make_dedupe_key(new_ev)
+    new_ev['dedupe_key'] = new_dedupe
+    conn.execute("DELETE FROM evidence WHERE dedupe_key=?", (old_dedupe,))   # 先删旧
+    existing = conn.execute("SELECT * FROM evidence WHERE dedupe_key=?", (new_dedupe,)).fetchall()
+    if existing:
+        ex = dict(existing[0])
+        cmp_fields = [k for k in new_ev if k not in ('id', 'dedupe_key', 'created_at')]
+        if all(new_ev.get(k) == ex.get(k) for k in cmp_fields):
+            return 'merged'                 # 完全一致：合并（保留现有，不重复插入）
+        raise EvidenceCollisionError(
+            f"evidence 非完全一致碰撞：{field} {ev.get(field)}→{new_val} "
+            f"dedupe={new_dedupe[:12]}… 身份字段同但内容(evidence_text/extraction_method 等)冲突")
+    insert_evidence(conn, new_ev)
+    return 'migrated'
+
+
+def _migrate_formula_evidence(conn, old_id, canon_id):
+    """迁移旧 formula id 作为 subject / object 的 evidence 到 canonical。
+    重算 dedupe_key；source_record_id（历史来源）绝对不改。
+    exact 碰撞合并并计入；非完全一致碰撞 raise（整批 ROLLBACK）。
+    返回 {'subject':n,'object':n,'merged':n}。"""
+    stats = {'subject': 0, 'object': 0, 'merged': 0}
+    for ev in [dict(r) for r in conn.execute(
+            "SELECT * FROM evidence WHERE subject_type='formula' AND subject_id=?", (old_id,)).fetchall()]:
+        r = _migrate_one_ev(conn, ev, 'subject_id', canon_id)
+        stats['subject' if r == 'migrated' else 'merged'] += 1
+    for ev in [dict(r) for r in conn.execute(
+            "SELECT * FROM evidence WHERE object_type='formula' AND object_id=?", (old_id,)).fetchall()]:
+        r = _migrate_one_ev(conn, ev, 'object_id', canon_id)
+        stats['object' if r == 'migrated' else 'merged'] += 1
+    return stats
+
+
+def _assert_safe_to_delete(conn, old_ids, refs):
+    """删除旧 formula 前强制门禁（任一不过 → raise → 整批 ROLLBACK）：
+    1) 旧 id 不再作为任何 evidence subject/object；
+    2) 普通关系引用归零；
+    3) audit_evidence_refs 无孤儿（subject/object 必须存在）。
+    source_record_id 允许保留旧 id（历史来源，不计孤儿）。"""
+    for old in old_ids:
+        n_subj = conn.execute(
+            "SELECT COUNT(*) FROM evidence WHERE subject_type='formula' AND subject_id=?",
+            (old,)).fetchone()[0]
+        n_obj = conn.execute(
+            "SELECT COUNT(*) FROM evidence WHERE object_type='formula' AND object_id=?",
+            (old,)).fetchone()[0]
+        if n_subj or n_obj:
+            raise RuntimeError(
+                f"门禁失败：旧id {old} 仍作 evidence subject({n_subj})/object({n_obj})，须先迁移")
+    ph = _in_ph(len(old_ids))
+    for ref in refs:
+        n = conn.execute(
+            f'SELECT COUNT(*) FROM "{ref["table"]}" WHERE "{ref["column"]}" IN ({ph})',
+            old_ids).fetchone()[0]
+        if n:
+            raise RuntimeError(f"门禁失败：{ref['table']}.{ref['column']} 仍有 {n} 条引用旧id")
+    try:
+        from audit_db import check_evidence_references
+        errs = check_evidence_references(conn)
+    except Exception as e:
+        raise RuntimeError(f"门禁失败：audit_evidence_refs 不可用：{e}")
+    if errs:
+        raise RuntimeError(f"门禁失败：audit_evidence_refs 报 {len(errs)} 个孤儿：{errs[:3]}")
+
+
 def _plan_group(conn, name):
     """计算单组迁移计划（只读）。返回 plan 或 None。"""
     rows_d = [dict(r) for r in conn.execute(
@@ -353,8 +430,14 @@ def _plan_group(conn, name):
 
 
 def _apply_group(conn, p):
-    """执行单组迁移（事务内）。dry-run 与正式同代码路径。"""
+    """执行单组迁移（事务内）。dry-run 与正式同代码路径。
+    顺序：迁移旧subject/object evidence→写merged_from+字段冲突→普通关系→补canonical→门禁→删旧formula。"""
+    # 5.1 旧 id 作为 subject/object 的 evidence → canonical（重算 dedupe_key，source_record_id 不改）
+    for nid in p['non_canon']:
+        _migrate_formula_evidence(conn, nid, p['canon_id'])
+    # 5.2 merged_from + 字段冲突 evidence；返回 canonical 字段补值
     updates = _write_merge_evidence(conn, p['rows_d'], p['canon'])
+    # 5.3 普通关系引用改指 canonical（INSERT OR IGNORE 合并 + 删旧）
     for ref in p['refs']:
         cols = [c[1] for c in conn.execute(f'PRAGMA table_info("{ref["table"]}")')]
         other = [c for c in cols if c != ref['column']]
@@ -368,12 +451,16 @@ def _apply_group(conn, p):
         conn.execute(
             f'DELETE FROM "{ref["table"]}" WHERE "{ref["column"]}" IN ({_in_ph(len(p["non_canon"]))})',
             p['non_canon'])
-    conn.execute(
-        f'DELETE FROM formulas WHERE id IN ({_in_ph(len(p["non_canon"]))})', p['non_canon'])
+    # 5.4 补 canonical 空字段
     if updates:
         set_clause = ','.join(f'"{k}"=?' for k in updates)
         conn.execute(f'UPDATE formulas SET {set_clause} WHERE id=?',
                      list(updates.values()) + [p['canon_id']])
+    # 门禁：删 formula 前强制检查（旧 id 不再作 subject/object + 关系归零 + audit_evidence_refs 通过）
+    _assert_safe_to_delete(conn, p['non_canon'], p['refs'])
+    # 5.5 最后删旧 formula
+    conn.execute(
+        f'DELETE FROM formulas WHERE id IN ({_in_ph(len(p["non_canon"]))})', p['non_canon'])
 
 
 def cmd_migrate(args):

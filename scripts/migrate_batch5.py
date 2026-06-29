@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-"""五组去重单事务迁移（麻黄汤/小柴胡汤/抵当汤/旋覆代赭石汤/乌梅丸）。
+"""⚠️ 历史一次性脚本（2026-06-29 五组去重已执行完成，commit 255f4d6）。
+
+未来方剂去重一律用 `scripts/migrate_formula_dedup.py migrate --name ...`——通用脚本已回填
+evidence subject/object 迁移 + 删除前强制门禁（见 _migrate_formula_evidence / _assert_safe_to_delete /
+_apply_group），覆盖了本脚本当初手工增强的场景。本脚本仅为当时一次性迁移逻辑留档，
+**不得作为主入口**。
+
+---
+
+原五组去重单事务迁移（麻黄汤/小柴胡汤/抵当汤/旋覆代赭石汤/乌梅丸）。
 
 按用户步骤5顺序（单事务，任一失败整批 ROLLBACK）：
   5.1 旧subject evidence → canonical（重算 dedupe_key，INSERT OR IGNORE 去重 + 删旧）

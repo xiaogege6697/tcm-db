@@ -1,0 +1,2060 @@
+[
+  {
+    "name": "白虎汤",
+    "duplicate_ids": [
+      2,
+      16,
+      76,
+      77,
+      78,
+      243
+    ],
+    "canonical_id": 243,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 2,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/10.辨厥阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "白虎汤",
+          "source_book": "伤寒论",
+          "chapter": "10.辨厥阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 16,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
+        "nonempty_fields": {
+          "name": "白虎汤",
+          "source_book": "伤寒论",
+          "chapter": "3.辨太阳病脉证并治法上篇",
+          "composition": "石膏,知母,炙甘草,粳米",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 4
+        }
+      },
+      {
+        "id": 76,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "白虎汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 77,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "白虎汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "composition": "石膏,知母,炙甘草,粳米",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 4
+        }
+      },
+      {
+        "id": 78,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "白虎汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "composition": "石膏,知母,炙甘草,粳米",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 4
+        }
+      },
+      {
+        "id": 243,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "白虎汤",
+          "source_book": "伤寒论",
+          "six_channel": "阳明",
+          "syndrome": "阳明经热，高热、大渴、大汗、大烦，大便未必结",
+          "composition": "石膏,知母,炙甘草,粳米",
+          "differentiation": "与承气汤区别在是否有燥屎腑实；课程强调石膏剂量要足但不可自行用药",
+          "lesson_ref": "L11,L14,L15",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 4,
+          "formula_syndromes": 1,
+          "case_formulas": 8
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "10.辨厥阴病脉证并治法",
+            "from_ids": [
+              2
+            ]
+          },
+          {
+            "value": "3.辨太阳病脉证并治法上篇",
+            "from_ids": [
+              16
+            ]
+          },
+          {
+            "value": "5.辨太阳病脉证并治法下篇",
+            "from_ids": [
+              76,
+              77,
+              78
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 12,
+    "plan_migrate_by_table": {
+      "formula_herbs": 12
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 5
+    }
+  },
+  {
+    "name": "五苓散",
+    "duplicate_ids": [
+      32,
+      33,
+      34,
+      86,
+      225
+    ],
+    "canonical_id": 225,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 32,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "五苓散",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 33,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "五苓散",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "猪苓、茯苓、白术、泽泻、桂枝",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 34,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "五苓散",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "猪苓、茯苓、白术、泽泻、桂枝",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 86,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "五苓散",
+          "source_book": "伤寒论",
+          "chapter": "6.辨阳明病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 225,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "五苓散",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "水液代谢失常，小便不利、水逆",
+          "composition": "猪苓、茯苓、白术、泽泻、桂枝",
+          "differentiation": "与猪苓汤区别：五苓偏气化利水，猪苓兼阴虚血尿/结石",
+          "lesson_ref": "L04,L11,L12",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1,
+          "case_formulas": 7
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              32,
+              33,
+              34
+            ]
+          },
+          {
+            "value": "6.辨阳明病脉证并治法",
+            "from_ids": [
+              86
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 2,
+    "plan_migrate_by_table": {
+      "formula_herbs": 2
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 4
+    }
+  },
+  {
+    "name": "真武汤",
+    "duplicate_ids": [
+      36,
+      37,
+      98,
+      101,
+      228
+    ],
+    "canonical_id": 228,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 36,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "真武汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "炮附子、白术、茯苓、白芍、生姜",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 37,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "真武汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "炮附子、白术、茯苓、白芍、生姜",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 98,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "真武汤",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 101,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "真武汤",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 228,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "真武汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "下焦寒湿、水气内停，少阴水气病",
+          "composition": "炮附子、白术、茯苓、白芍、生姜",
+          "differentiation": "与苓桂术甘汤中膈水饮不同；附子高风险",
+          "lesson_ref": "L05,L14",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1,
+          "formula_syndromes": 1,
+          "case_formulas": 17
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              36,
+              37
+            ]
+          },
+          {
+            "value": "9.辨少阴病脉证并治法",
+            "from_ids": [
+              98,
+              101
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 2,
+    "plan_migrate_by_table": {
+      "formula_herbs": 2
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 4
+    }
+  },
+  {
+    "name": "麻黄汤",
+    "duplicate_ids": [
+      24,
+      27,
+      31,
+      51,
+      214
+    ],
+    "canonical_id": 214,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 24,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
+        "nonempty_fields": {
+          "name": "麻黄汤",
+          "source_book": "伤寒论",
+          "chapter": "3.辨太阳病脉证并治法上篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 27,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "麻黄汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 31,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "麻黄汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 51,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "麻黄汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 214,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "麻黄汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "太阳伤寒，无汗、体痛、脉紧；发阳宣肺",
+          "differentiation": "发汗前必须看尺脉与津液；咽干、淋家、疮家禁汗",
+          "lesson_ref": "L01,L03,L04",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1,
+          "case_formulas": 2
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "3.辨太阳病脉证并治法上篇",
+            "from_ids": [
+              24
+            ]
+          },
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              27,
+              31,
+              51
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 4
+    }
+  },
+  {
+    "name": "大柴胡汤",
+    "duplicate_ids": [
+      41,
+      46,
+      60,
+      68
+    ],
+    "canonical_id": 41,
+    "canonical_source": "hantang",
+    "canonical_reason": "rule2-4:字段完整度最高(4个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 41,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "大柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "柴胡、黄芩、枳实、白芍、炙甘草、大黄、厚朴、生姜",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 46,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "大柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "柴胡、黄芩、枳实、白芍、炙甘草、大黄、厚朴、生姜",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 60,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "大柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 68,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "大柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "composition": "柴胡、黄芩、枳实、白芍、炙甘草、大黄、厚朴、生姜",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1,
+          "case_formulas": 9
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              41,
+              46
+            ]
+          },
+          {
+            "value": "5.辨太阳病脉证并治法下篇",
+            "from_ids": [
+              60,
+              68
+            ]
+          }
+        ],
+        "canonical_value": "4.辨太阳病脉证并治法中篇",
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 11,
+    "plan_migrate_by_table": {
+      "formula_herbs": 2,
+      "case_formulas": 9
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 3
+    }
+  },
+  {
+    "name": "小柴胡汤",
+    "duplicate_ids": [
+      42,
+      43,
+      44,
+      230
+    ],
+    "canonical_id": 230,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 42,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "小柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 43,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "小柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 44,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "小柴胡汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 230,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "小柴胡汤",
+          "source_book": "伤寒论",
+          "six_channel": "少阳",
+          "syndrome": "少阳病往来寒热、胸胁苦满；妇人热入血室",
+          "differentiation": "经期外感首重和解，不发汗",
+          "lesson_ref": "L05,L08",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1,
+          "case_formulas": 8
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 3
+    }
+  },
+  {
+    "name": "抵当汤",
+    "duplicate_ids": [
+      57,
+      59,
+      84,
+      250
+    ],
+    "canonical_id": 250,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 57,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "抵当汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 59,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "抵当汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 84,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "抵当汤",
+          "source_book": "伤寒论",
+          "chapter": "6.辨阳明病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 250,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "抵当汤",
+          "source_book": "伤寒论",
+          "six_channel": "少阳",
+          "syndrome": "阳明蓄血，善忘、黑便、少腹硬满",
+          "differentiation": "与燥屎便秘鉴别在小便自利、瘀血表现",
+          "lesson_ref": "L12",
+          "is_high_risk": 1
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "5.辨太阳病脉证并治法下篇",
+            "from_ids": [
+              57,
+              59
+            ]
+          },
+          {
+            "value": "6.辨阳明病脉证并治法",
+            "from_ids": [
+              84
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      },
+      {
+        "field": "is_high_risk",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": 0,
+            "from_ids": [
+              57,
+              59,
+              84
+            ]
+          },
+          {
+            "value": 1,
+            "from_ids": [
+              250
+            ]
+          }
+        ],
+        "canonical_value": 1,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 3
+    }
+  },
+  {
+    "name": "四逆散",
+    "duplicate_ids": [
+      103,
+      104,
+      264
+    ],
+    "canonical_id": 264,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 103,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "四逆散",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 104,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "四逆散",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 264,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "四逆散",
+          "source_book": "伤寒论",
+          "six_channel": "少阴",
+          "syndrome": "四逆但偏气机郁滞，柴胡、枳实、芍药、甘草",
+          "differentiation": "与四逆汤寒厥完全不同；课程有胆结石加减",
+          "lesson_ref": "L14",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1,
+          "case_formulas": 2
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 2
+    }
+  },
+  {
+    "name": "四逆汤",
+    "duplicate_ids": [
+      39,
+      83,
+      253
+    ],
+    "canonical_id": 253,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 39,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "四逆汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "生附子、干姜、炙甘草",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 83,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "四逆汤",
+          "source_book": "伤寒论",
+          "chapter": "6.辨阳明病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 253,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "四逆汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "太阴/少阴里寒极盛，下利清谷、四肢厥冷",
+          "composition": "生附子、干姜、炙甘草",
+          "differentiation": "破阴回阳猛剂，含附子，严禁自行尝试",
+          "lesson_ref": "L05,L13-L15",
+          "is_high_risk": 1
+        },
+        "relations": {
+          "formula_herbs": 1,
+          "formula_syndromes": 1,
+          "case_formulas": 46
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              39
+            ]
+          },
+          {
+            "value": "6.辨阳明病脉证并治法",
+            "from_ids": [
+              83
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      },
+      {
+        "field": "is_high_risk",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": 0,
+            "from_ids": [
+              39,
+              83
+            ]
+          },
+          {
+            "value": 1,
+            "from_ids": [
+              253
+            ]
+          }
+        ],
+        "canonical_value": 1,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 1,
+    "plan_migrate_by_table": {
+      "formula_herbs": 1
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 2
+    }
+  },
+  {
+    "name": "旋覆代赭石汤",
+    "duplicate_ids": [
+      65,
+      66,
+      67
+    ],
+    "canonical_id": 65,
+    "canonical_source": "hantang",
+    "canonical_reason": "rule2-4:字段完整度最高(3个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 65,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "旋覆代赭石汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 66,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "旋覆代赭石汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 67,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "旋覆代赭石汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 2
+    }
+  },
+  {
+    "name": "桃核承气汤",
+    "duplicate_ids": [
+      48,
+      58,
+      235
+    ],
+    "canonical_id": 235,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 48,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "桃核承气汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 58,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "桃核承气汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 235,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "桃核承气汤",
+          "source_book": "伤寒论",
+          "six_channel": "少阳",
+          "syndrome": "蓄血初/实，少腹急结、口渴不欲饮、小便自利",
+          "differentiation": "治瘀血第一方；与阳明燥屎看小便和少腹",
+          "lesson_ref": "L06",
+          "is_high_risk": 1
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              48
+            ]
+          },
+          {
+            "value": "5.辨太阳病脉证并治法下篇",
+            "from_ids": [
+              58
+            ]
+          }
+        ],
+        "canonical_value": null,
+        "note": "非医学字段:冲突待人工裁定"
+      },
+      {
+        "field": "is_high_risk",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": 0,
+            "from_ids": [
+              48,
+              58
+            ]
+          },
+          {
+            "value": 1,
+            "from_ids": [
+              235
+            ]
+          }
+        ],
+        "canonical_value": 1,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 2
+    }
+  },
+  {
+    "name": "猪苓汤",
+    "duplicate_ids": [
+      81,
+      87,
+      249
+    ],
+    "canonical_id": 249,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 81,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "猪苓汤",
+          "source_book": "伤寒论",
+          "chapter": "6.辨阳明病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 87,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "猪苓汤",
+          "source_book": "伤寒论",
+          "chapter": "6.辨阳明病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 249,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "猪苓汤",
+          "source_book": "伤寒论",
+          "six_channel": "阳明",
+          "syndrome": "小便不利、泌尿结石、阴虚火旺、尿血",
+          "composition": "猪苓,茯苓,泽泻,滑石,阿胶",
+          "differentiation": "滑石碎石润滑，阿胶修补止血；与五苓散不同",
+          "lesson_ref": "L11,L12",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 5,
+          "formula_syndromes": 1,
+          "case_formulas": 5
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 2
+    }
+  },
+  {
+    "name": "葛根汤",
+    "duplicate_ids": [
+      17,
+      20,
+      215
+    ],
+    "canonical_id": 215,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 17,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
+        "nonempty_fields": {
+          "name": "葛根汤",
+          "source_book": "伤寒论",
+          "chapter": "3.辨太阳病脉证并治法上篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 20,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
+        "nonempty_fields": {
+          "name": "葛根汤",
+          "source_book": "伤寒论",
+          "chapter": "3.辨太阳病脉证并治法上篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 215,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "葛根汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "项背强几几、无汗、恶风",
+          "composition": "葛根四钱、麻黄二钱、桂枝三钱、白芍三钱、生姜二片、大枣十枚、炙甘草三钱",
+          "differentiation": "葛根上行；课程用于项背、刚痉、鼻窦炎等案例",
+          "lesson_ref": "L03",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1,
+          "formula_syndromes": 1,
+          "case_formulas": 4
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 2
+    }
+  },
+  {
+    "name": "乌梅丸",
+    "duplicate_ids": [
+      1,
+      265
+    ],
+    "canonical_id": 265,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 1,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/10.辨厥阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "乌梅丸",
+          "source_book": "伤寒论",
+          "chapter": "10.辨厥阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 265,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "乌梅丸",
+          "source_book": "伤寒论",
+          "six_channel": "少阴",
+          "syndrome": "厥阴蛔厥、寒热错杂久利",
+          "composition": "乌梅,黄连,黄柏,人参,当归,桂枝,炮附子,细辛,干姜,蜀椒",
+          "differentiation": "酸静、辣伏、苦下的诱杀逻辑",
+          "lesson_ref": "L15",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 9,
+          "formula_syndromes": 1,
+          "case_formulas": 8
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "吴茱萸汤",
+    "duplicate_ids": [
+      56,
+      99
+    ],
+    "canonical_id": 99,
+    "canonical_source": "hantang",
+    "canonical_reason": "rule2-4:字段完整度最高(4个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 56,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "吴茱萸汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 99,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "吴茱萸汤",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "composition": "吴茱萸,人参,生姜,大枣",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 4,
+          "case_formulas": 4
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "5.辨太阳病脉证并治法下篇",
+            "from_ids": [
+              56
+            ]
+          },
+          {
+            "value": "9.辨少阴病脉证并治法",
+            "from_ids": [
+              99
+            ]
+          }
+        ],
+        "canonical_value": "9.辨少阴病脉证并治法",
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "干姜黄连黄芩人参汤",
+    "duplicate_ids": [
+      3,
+      4
+    ],
+    "canonical_id": 3,
+    "canonical_source": "hantang",
+    "canonical_reason": "rule2-4:字段完整度最高(3个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 3,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/10.辨厥阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "干姜黄连黄芩人参汤",
+          "source_book": "伤寒论",
+          "chapter": "10.辨厥阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 4,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/10.辨厥阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "干姜黄连黄芩人参汤",
+          "source_book": "伤寒论",
+          "chapter": "10.辨厥阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "承气汤",
+    "duplicate_ids": [
+      29,
+      69
+    ],
+    "canonical_id": 29,
+    "canonical_source": "hantang",
+    "canonical_reason": "rule2-4:字段完整度最高(3个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 29,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "承气汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1,
+          "case_formulas": 1
+        }
+      },
+      {
+        "id": 69,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "承气汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "chapter",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "4.辨太阳病脉证并治法中篇",
+            "from_ids": [
+              29
+            ]
+          },
+          {
+            "value": "5.辨太阳病脉证并治法下篇",
+            "from_ids": [
+              69
+            ]
+          }
+        ],
+        "canonical_value": "4.辨太阳病脉证并治法中篇",
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "旋覆代赭汤",
+    "duplicate_ids": [
+      5,
+      239
+    ],
+    "canonical_id": 239,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 5,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/10.辨厥阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "旋覆代赭汤",
+          "source_book": "伤寒论",
+          "chapter": "10.辨厥阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 239,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "旋覆代赭汤",
+          "source_book": "伤寒论",
+          "six_channel": "少阳",
+          "syndrome": "胃酸反逆、心下痞硬、噫气不除",
+          "composition": "旋覆花三钱,代赭石三钱,干姜二钱,吴茱萸三钱,炙甘草三钱,大枣十枚,桂枝三钱,白芍三钱",
+          "differentiation": "降逆化痰，兼顾胃气",
+          "lesson_ref": "L09",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 8,
+          "case_formulas": 2
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "柴胡桂枝汤",
+    "duplicate_ids": [
+      62,
+      231
+    ],
+    "canonical_id": 231,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 62,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "柴胡桂枝汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 231,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "柴胡桂枝汤",
+          "source_book": "伤寒论",
+          "six_channel": "少阳",
+          "syndrome": "一半太阳一半少阳",
+          "differentiation": "既有表证又有少阳枢机不利",
+          "lesson_ref": "L08",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "桂枝人参汤",
+    "duplicate_ids": [
+      71,
+      238
+    ],
+    "canonical_id": 238,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 71,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "桂枝人参汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 238,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "桂枝人参汤",
+          "source_book": "伤寒论",
+          "six_channel": "少阳",
+          "syndrome": "寒利，中焦虚寒下利",
+          "differentiation": "与葛根芩连汤热利相反",
+          "lesson_ref": "L09",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "桂枝加芍药汤",
+    "duplicate_ids": [
+      92,
+      251
+    ],
+    "canonical_id": 251,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 92,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/8.辨太阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "桂枝加芍药汤",
+          "source_book": "伤寒论",
+          "chapter": "8.辨太阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 251,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "桂枝加芍药汤",
+          "source_book": "伤寒论",
+          "six_channel": "阳明",
+          "syndrome": "太阴病腹满时痛",
+          "differentiation": "偏虚寒腹痛，不是阳明实满",
+          "lesson_ref": "L13",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "桂枝加葛根汤",
+    "duplicate_ids": [
+      10,
+      210
+    ],
+    "canonical_id": 210,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 10,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
+        "nonempty_fields": {
+          "name": "桂枝加葛根汤",
+          "source_book": "伤寒论",
+          "chapter": "3.辨太阳病脉证并治法上篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 210,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "桂枝加葛根汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "太阳中风兼项背强、面部中风方向",
+          "differentiation": "葛根上行至项背；有汗用桂枝加葛根，无汗偏葛根汤",
+          "lesson_ref": "L02",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "case_formulas": 5
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "桂枝甘草汤",
+    "duplicate_ids": [
+      54,
+      220
+    ],
+    "canonical_id": 220,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 54,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "桂枝甘草汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "桂枝,炙甘草,大枣",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 3
+        }
+      },
+      {
+        "id": 220,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "桂枝甘草汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "发汗伤心阳，心下悸",
+          "composition": "桂枝,炙甘草,大枣",
+          "differentiation": "桂枝降冲逆，炙甘草补中强心",
+          "lesson_ref": "L04",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 3
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 3,
+    "plan_migrate_by_table": {
+      "formula_herbs": 3
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "桂枝麻黄各半汤",
+    "duplicate_ids": [
+      11,
+      213
+    ],
+    "canonical_id": 213,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 11,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/3.辨太阳病脉证并治法上篇.md",
+        "nonempty_fields": {
+          "name": "桂枝麻黄各半汤",
+          "source_book": "伤寒论",
+          "chapter": "3.辨太阳病脉证并治法上篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 213,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "桂枝麻黄各半汤",
+          "source_book": "伤寒论",
+          "six_channel": "太阳",
+          "syndrome": "往来寒热但无恶心，皮下邪气未透",
+          "differentiation": "与小柴胡汤区别：无少阳恶心、胸胁苦满",
+          "lesson_ref": "L02",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "case_formulas": 1
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "甘草干姜汤",
+    "duplicate_ids": [
+      55,
+      292
+    ],
+    "canonical_id": 292,
+    "canonical_source": "nihaixia-kb",
+    "canonical_reason": "rule2-4:字段完整度最高(4个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 55,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/5.辨太阳病脉证并治法下篇.md",
+        "nonempty_fields": {
+          "name": "甘草干姜汤",
+          "source_book": "伤寒论",
+          "chapter": "5.辨太阳病脉证并治法下篇",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 292,
+        "source_repo": "nihaixia-kb",
+        "raw_path": "new-repos/nihaixia-kb/wiki/医案/方剂/甘草干姜汤.md",
+        "nonempty_fields": {
+          "name": "甘草干姜汤",
+          "source_book": "临床记录",
+          "composition": "干姜,炙甘草",
+          "is_high_risk": 0,
+          "commentary": "---\ntitle: \"甘草干姜汤\"\ntype: 方剂\n组成: [干姜, 炙甘草]\n主治: [肺寒, 肺阳不足]\n关联病机: [肺寒, 肺阳不足]\ntags: [方剂, 温里剂]\n---\n\n## 组成\n\n- 干姜二钱\n- 炙甘草三钱\n\n## 功效\n\n温肺散寒，益气补中。\n\n## 主治\n\n肺寒，肺阳不足，咳吐清稀痰涎。\n\n## 方解\n\n干姜温肺化饮，炙甘草益气补中、调和诸药。两药合用，共奏温肺散寒之功。\n\n## 倪师用法\n\n本案治疗ALS病人三诊：肺阳不足，用甘草干姜汤治肺寒。倪师曰：甘草干姜汤，治肺寒。\n\n## 关联页面\n\n- [[病机/肺寒]]\n- [[病机/肺阳不足]]\n- [[治法/治肺寒]]\n- [[药物/干姜]]\n- [[药物/炙甘草]]\n"
+        },
+        "relations": {
+          "formula_herbs": 2,
+          "case_formulas": 2
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "source_book",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": "伤寒论",
+            "from_ids": [
+              55
+            ]
+          },
+          {
+            "value": "临床记录",
+            "from_ids": [
+              292
+            ]
+          }
+        ],
+        "canonical_value": "临床记录",
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "调胃承气汤",
+    "duplicate_ids": [
+      40,
+      247
+    ],
+    "canonical_id": 247,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 40,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/4.辨太阳病脉证并治法中篇.md",
+        "nonempty_fields": {
+          "name": "调胃承气汤",
+          "source_book": "伤寒论",
+          "chapter": "4.辨太阳病脉证并治法中篇",
+          "composition": "- 大黄（酒洗）四两\n- 厚朴（炙，去皮）半斤\n- 枳实（炙）五枚\n- 芒硝三合",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_herbs": 1
+        }
+      },
+      {
+        "id": 247,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "调胃承气汤",
+          "source_book": "伤寒论",
+          "six_channel": "阳明",
+          "syndrome": "阳明燥热偏中焦，调胃承气方向",
+          "composition": "- 大黄（酒洗）四两\n- 厚朴（炙，去皮）半斤\n- 枳实（炙）五枚\n- 芒硝三合",
+          "differentiation": "需与大小承气辨轻重和部位",
+          "lesson_ref": "L11-L12",
+          "is_high_risk": 1
+        },
+        "relations": {
+          "formula_herbs": 1,
+          "case_formulas": 3
+        }
+      }
+    ],
+    "field_conflicts": [
+      {
+        "field": "is_high_risk",
+        "is_medical": false,
+        "variants": [
+          {
+            "value": 0,
+            "from_ids": [
+              40
+            ]
+          },
+          {
+            "value": 1,
+            "from_ids": [
+              247
+            ]
+          }
+        ],
+        "canonical_value": 1,
+        "note": "非医学字段:冲突待人工裁定"
+      }
+    ],
+    "plan_migrate_relations": 1,
+    "plan_migrate_by_table": {
+      "formula_herbs": 1
+    },
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "附子汤",
+    "duplicate_ids": [
+      96,
+      97
+    ],
+    "canonical_id": 96,
+    "canonical_source": "hantang",
+    "canonical_reason": "rule2-4:字段完整度最高(3个非空)并列取来源可靠性+最低id",
+    "rows": [
+      {
+        "id": 96,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "附子汤",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "case_formulas": 1
+        }
+      },
+      {
+        "id": 97,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/9.辨少阴病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "附子汤",
+          "source_book": "伤寒论",
+          "chapter": "9.辨少阴病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  },
+  {
+    "name": "麻子仁丸",
+    "duplicate_ids": [
+      89,
+      248
+    ],
+    "canonical_id": 248,
+    "canonical_source": "nihaixia",
+    "canonical_reason": "rule1:带six_channel的nihaixia版",
+    "rows": [
+      {
+        "id": 89,
+        "source_repo": "hantang",
+        "raw_path": "hantang-nihaixia-follower/倪海厦/人纪-4-伤寒论/6.辨阳明病脉证并治法.md",
+        "nonempty_fields": {
+          "name": "麻子仁丸",
+          "source_book": "伤寒论",
+          "chapter": "6.辨阳明病脉证并治法",
+          "is_high_risk": 0
+        },
+        "relations": {}
+      },
+      {
+        "id": 248,
+        "source_repo": "nihaixia",
+        "raw_path": "nihaixia/references/formula-patterns.md",
+        "nonempty_fields": {
+          "name": "麻子仁丸",
+          "source_book": "伤寒论",
+          "six_channel": "阳明",
+          "syndrome": "脾约，津液枯竭，大便羊屎状",
+          "differentiation": "仁剂润肠，课程强调丸剂缓治",
+          "lesson_ref": "L12",
+          "is_high_risk": 0
+        },
+        "relations": {
+          "formula_syndromes": 1,
+          "case_formulas": 2
+        }
+      }
+    ],
+    "field_conflicts": [],
+    "plan_migrate_relations": 0,
+    "plan_migrate_by_table": {},
+    "expected_after": {
+      "formulas_remaining": 1,
+      "rows_to_delete": 1
+    }
+  }
+]

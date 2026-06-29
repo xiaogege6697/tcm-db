@@ -7,7 +7,7 @@
 
 import sqlite3, json, os, sys, re
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, unquote
 from pathlib import Path
 import mimetypes
 
@@ -15,10 +15,59 @@ DB_PATH = Path(__file__).parent / "tcm_knowledge.db"
 SCREENSHOTS_DIR = Path(__file__).parent / "screenshots"
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 
+class HttpError(Exception):
+    """HTTP 错误（白名单拒绝/路径穿越等），携带状态码与简短信息"""
+    def __init__(self, code, msg=''):
+        super().__init__(msg or str(code))
+        self.code = code
+        self.msg = msg
+
 def get_db():
     conn = sqlite3.connect(str(DB_PATH))
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON")  # 外键为连接级开关，每个连接显式启用
     return conn
+
+def _load_allowed_identifiers():
+    """启动时从 schema 读取合法表名/列名，构建白名单以防 SQL 注入。"""
+    allowed = {}
+    try:
+        conn = get_db()
+        for (t,) in conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+        ).fetchall():
+            allowed[t] = {r[1] for r in conn.execute(f'PRAGMA table_info("{t}")').fetchall()}
+        conn.close()
+    except Exception:
+        pass
+    return allowed
+
+ALLOWED_COLUMNS = _load_allowed_identifiers()  # {table: {col, ...}}
+ALLOWED_TABLES = set(ALLOWED_COLUMNS.keys())
+
+def validate_table(table):
+    """表名白名单校验；用户输入禁止直接进入 SQL 表名位置"""
+    if table not in ALLOWED_TABLES:
+        raise HttpError(400, 'invalid table')
+    return table
+
+def validate_column(table, column):
+    """列名白名单校验；用户输入禁止直接进入 SQL 列名位置"""
+    if column not in ALLOWED_COLUMNS.get(table, ()):
+        raise HttpError(400, 'invalid column')
+    return column
+
+def resolve_screenshot(rel_raw, root=SCREENSHOTS_DIR):
+    """安全解析截图相对路径：URL decode 后 resolve，必须仍位于 root 内。
+    拒绝 ..、绝对路径、符号链接逃逸、编码绕过；越界抛 HttpError(403)。"""
+    rel = unquote(rel_raw)
+    root_resolved = root.resolve()
+    try:
+        target = (root / rel).resolve()
+        target.relative_to(root_resolved)  # 越界则抛 ValueError
+    except (ValueError, RuntimeError):
+        raise HttpError(403, 'forbidden')
+    return target
 
 def dict_row(row):
     return dict(row) if row else None
@@ -109,14 +158,16 @@ def api_search(keyword, limit=20):
 
 def api_browse(table, page=1, per_page=30, filters=None):
     """分页浏览"""
+    validate_table(table)
     conn = get_db()
     offset = (page - 1) * per_page
-    
+
     where = "1=1"
     params = []
     if filters:
         for k, v in filters.items():
             if v:
+                validate_column(table, k)
                 where += f" AND {k} LIKE ?"
                 params.append(f"%{v}%")
     
@@ -128,6 +179,7 @@ def api_browse(table, page=1, per_page=30, filters=None):
 
 def api_detail(table, id):
     """查看详情"""
+    validate_table(table)
     conn = get_db()
     row = conn.execute(f"SELECT * FROM {table} WHERE id = ?", (id,)).fetchone()
     d = dict_row(row)
@@ -292,6 +344,8 @@ def render_markdown(text):
 
 def api_filter_options(table, column):
     """获取筛选选项"""
+    validate_table(table)
+    validate_column(table, column)
     conn = get_db()
     rows = conn.execute(f"SELECT DISTINCT {column} FROM {table} WHERE {column} IS NOT NULL AND {column} != '' ORDER BY {column}").fetchall()
     conn.close()
@@ -299,6 +353,7 @@ def api_filter_options(table, column):
 
 def api_export_table(table, format='json'):
     """导出整个表的数据"""
+    validate_table(table)
     conn = get_db()
     rows = conn.execute(f"SELECT * FROM {table}").fetchall()
     conn.close()
@@ -831,8 +886,12 @@ class TCMHandler(BaseHTTPRequestHandler):
         # 截图静态文件服务
         if path.startswith('/screenshots/'):
             rel = path[len('/screenshots/'):]
-            file_path = SCREENSHOTS_DIR / rel
-            if file_path.exists() and file_path.is_file():
+            try:
+                file_path = resolve_screenshot(rel)
+            except HttpError as e:
+                self.send_error(e.code, e.msg or None)
+                return
+            if file_path.is_file():
                 self.send_response(200)
                 self.send_header('Content-Type', 'image/webp')
                 self.send_header('Cache-Control', 'max-age=86400')
@@ -907,8 +966,10 @@ class TCMHandler(BaseHTTPRequestHandler):
             else:
                 self.send_error(404)
         
-        except Exception as e:
-            self.send_json({"error": str(e)}, 500)
+        except HttpError as e:
+            self.send_error(e.code, e.msg or None)
+        except Exception:
+            self.send_error(500)  # 不向客户端泄露内部异常细节
     
     def send_json(self, data, code=200):
         self.send_response(code)
@@ -923,5 +984,6 @@ if __name__ == '__main__':
     print(f"   数据库: {DB_PATH}")
     print(f"   截图: {SCREENSHOTS_DIR}")
     print(f"   按 Ctrl+C 停止\n")
-    server = HTTPServer(('0.0.0.0', PORT), TCMHandler)
+    # 仅监听本机回环；如需局域网访问，改 '0.0.0.0' 并单独确认
+    server = HTTPServer(('127.0.0.1', PORT), TCMHandler)
     server.serve_forever()

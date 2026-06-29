@@ -4,3 +4,7 @@ __pycache__/
 *.db-journal
 *.db-wal
 *.db-shm
+
+# 运行时产物 / 本机备份，不提交（含临时 db 文件已由 *.db-* 覆盖）
+backups/
+server.log

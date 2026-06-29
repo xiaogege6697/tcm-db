@@ -7,11 +7,11 @@
 | 表 | 记录数 | 说明 |
 |---|---|---|
 | 中药 `herbs` | 472 | 神农本草经上中下三经 + 倪师/小编补充 + 临床用药 |
-| 方剂 `formulas` | 305 | 伤寒论 + 金匮要略 + 汉唐方剂 + 临床记录 |
+| 方剂 `formulas` | 234 | 伤寒论 + 金匮要略 + 汉唐方剂（27组重名已合并去重） |
 | 症状 `symptoms` | 727 | 按全身/四肢/头面/胸腹/寒热/二便/脉象/舌象/睡眠分类 |
 | 证型/病机 `syndromes` | 194 | 六经辨证 + 疾病机制 |
 | 穴位 `acupoints` | 47 | 经络归属 + 功效 + 用法 |
-| 医案 `clinical_cases` | 1,449 | 倪师2005-2008年诊疗记录 + 结构化医案 |
+| 医案 `clinical_cases` | 1,737 | 倪师2005-2008年诊疗记录 + 结构化医案 |
 | 经典原文 `classics` | 113 | 黄帝内经73篇 + 伤寒论14篇 + 金匮要略26篇 |
 | 课程笔记 `course_notes` | 121 | 六经/方证/症状/八纲/针灸/截图证据等 |
 | 治法 `treatment_methods` | 119 | 疏肝/补肾/补血等治疗方法 |
@@ -120,18 +120,30 @@ rows = conn.execute("""
 - hantang-nihaixia-follower: MulanPSL-2.0（木兰宽松许可证）
 - 其他仓库: 请参考各自 LICENSE 文件
 
-## 🔧 重建数据库
+## 🔧 数据库构建状态（v0.2）
 
-如需从源仓库重建数据库：
+**`tcm_knowledge.db` 是权威产物**，随 git 提交，不可从源仓库完整重建：
+- `populate.py build()` 是空壳（P1 工程债），**`--rebuild` 不可用**
+- 历史 `formulas` 导入器缺失（脏名/去重的根因脚本未留存）
+- 经多轮清洗（Phase0.5 名称清洗）+ 去重（27 组重名方剂合并）+ 安全加固，数据库为当前权威状态
+
+### 可运行的 ETL 步骤
 
 ```bash
-# 1. 克隆本仓库
-git clone https://github.com/xiaogege6697/tcm-db.git
+# 检查 clinical_cases 来源键状态（只读，不写入）
+python3 scripts/etl.py --check
+python3 scripts/etl.py --step check --dry-run
 
-# 2. 下载源数据仓库
-cd tcm-db
-python3 populate.py --download
+# 列出可用/受限步骤
+python3 scripts/etl.py
+```
 
-# 3. 填充数据库
-python3 populate.py
+- `check`：✅ 可用（报告来源键 NULL率/重复组/同文件多案冲突）
+- `case-ingest`：⛔ BLOCKED — clinical_cases 无可靠稳定来源身份键（`raw_path` 同文件多案、`patient_id` 实为标题）。见 `docs/clinical-cases-idempotency-analysis.md`（方案 A/B/C 待决策）。未实施幂等导入，避免假幂等
+- `formulas-ingest`：⛔ NOT IMPLEMENTED — 历史导入器缺失
+
+### 重新部署服务
+
+```bash
+python3 -u server.py 8080   # 绑定 127.0.0.1，旧ID自动重定向到canonical
 ```

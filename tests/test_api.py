@@ -10,6 +10,10 @@ import sys
 import os
 import pathlib
 import tempfile
+import threading
+import urllib.request
+import urllib.error
+import json
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 import server  # noqa: E402
@@ -156,6 +160,57 @@ class TestFormulaRedirect(unittest.TestCase):
             self.assertEqual(server.resolve_formula_redirect(old_id), canon_id)
             self.assertNotEqual(canon_id, old_id)
         self.assertIsNone(server.resolve_formula_redirect(777))
+
+
+class TestHttpDetailLayer(unittest.TestCase):
+    """真实 HTTP 层回归：验证 handler 对 api_detail 返回值的转码契约。
+    函数层测试只验证 api_detail 返回值，无法捕获 send_json(None)→200 null 这类
+    handler 层状态码错误（曾因此漏掉未知id应404）。"""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.httpd = server.HTTPServer(('127.0.0.1', 0), server.TCMHandler)
+        cls.port = cls.httpd.server_address[1]
+        cls.thread = threading.Thread(target=cls.httpd.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.httpd.shutdown()
+        cls.httpd.server_close()
+
+    def _get(self, path):
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))  # 禁系统代理，直连回环
+        try:
+            r = opener.open(f'http://127.0.0.1:{self.port}{path}', timeout=5)
+            return r.status, r.read().decode('utf-8', 'replace')
+        except urllib.error.HTTPError as e:
+            return e.code, e.read().decode('utf-8', 'replace')
+
+    def test_unknown_formula_returns_404_json(self):
+        """未知 formula id → HTTP 404 + JSON 错误体（非 200 null，非 HTML）"""
+        code, body = self._get('/api/detail/formulas/999999')
+        self.assertEqual(code, 404)
+        self.assertEqual(json.loads(body), {'error': 'not found'})
+
+    def test_canonical_returns_200_no_redirect(self):
+        """canonical 正常请求 → 200 且无重定向标记"""
+        code, body = self._get('/api/detail/formulas/209')
+        self.assertEqual(code, 200)
+        self.assertNotIn('_redirected_from', json.loads(body))
+
+    def test_old_id_redirects_200(self):
+        """旧id → 200 + 重定向字段"""
+        code, body = self._get('/api/detail/formulas/8')
+        self.assertEqual(code, 200)
+        d = json.loads(body)
+        self.assertEqual(d['_redirected_from'], 8)
+        self.assertEqual(d['_canonical_id'], 209)
+
+    def test_invalid_id_returns_400(self):
+        """非法id → HTTP 400"""
+        code, _ = self._get('/api/detail/formulas/abc')
+        self.assertEqual(code, 400)
 
 
 if __name__ == '__main__':

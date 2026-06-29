@@ -988,7 +988,11 @@ class TCMHandler(BaseHTTPRequestHandler):
             elif path.startswith('/api/detail/'):
                 parts = path.split('/')
                 table, id = parts[3], parts[4]  # id 严格校验交给 api_detail（非法→400）
-                self.send_json(api_detail(table, id))
+                result = api_detail(table, id)
+                if result is None:
+                    self.send_json({'error': 'not found'}, 404)  # 未知id→JSON 404（非HTML send_error）
+                else:
+                    self.send_json(result)
             
             elif path.startswith('/api/filter/'):
                 parts = path.split('/')

@@ -8,3 +8,6 @@ __pycache__/
 # 运行时产物 / 本机备份，不提交（含临时 db 文件已由 *.db-* 覆盖）
 backups/
 server.log
+
+# 含本机绝对路径的本地报告（保留本地不删除，但不入库）
+artifacts/local-only/

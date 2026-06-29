@@ -106,5 +106,57 @@ class TestPathTraversal(unittest.TestCase):
             server.resolve_screenshot('evil.webp', root=self.root)
 
 
+class TestFormulaRedirect(unittest.TestCase):
+    """旧 formula id 透明重定向到 canonical id（复用 evidence merged_from + 启动内存缓存）"""
+
+    def test_canonical_no_redirect(self):
+        """canonical id 正常请求不带重定向标记"""
+        d = server.api_detail('formulas', 209)
+        self.assertIsNotNone(d)
+        self.assertNotIn('_redirected_from', d)
+
+    def test_old_id_redirects(self):
+        """旧 id 命中重定向，返回 canonical 数据并附重定向信息"""
+        d = server.api_detail('formulas', 8)
+        self.assertIsNotNone(d)
+        self.assertEqual(d['_redirected_from'], 8)
+        self.assertEqual(d['_canonical_id'], 209)
+        self.assertEqual(d['id'], 209)
+
+    def test_unknown_id_returns_none(self):
+        """未知 id（既非 canonical 也非旧 id）返回 None"""
+        self.assertIsNone(server.api_detail('formulas', 999999))
+
+    def test_invalid_id_raises_400(self):
+        """非法 id 抛出 HttpError 且 code==400"""
+        with self.assertRaises(server.HttpError) as cm:
+            server.api_detail('formulas', 'abc')
+        self.assertEqual(cm.exception.code, 400)
+
+        with self.assertRaises(server.HttpError) as cm:
+            server.api_detail('formulas', '0')
+        self.assertEqual(cm.exception.code, 400)
+
+        with self.assertRaises(server.HttpError) as cm:
+            server.api_detail('formulas', '-1')
+        self.assertEqual(cm.exception.code, 400)
+
+    def test_cycle_protection(self):
+        """循环重定向检测：成环的映射应返回 None"""
+        original_map = server.FORMULA_REDIRECT_MAP
+        try:
+            server.FORMULA_REDIRECT_MAP = {1: 2, 2: 1}
+            self.assertIsNone(server.resolve_formula_redirect(1))
+        finally:
+            server.FORMULA_REDIRECT_MAP = original_map
+
+    def test_single_mapping_no_collision(self):
+        """单射性验证：同一 old_id 只映射到一个 canonical_id，且不映射到自身"""
+        for old_id, canon_id in server.FORMULA_REDIRECT_MAP.items():
+            self.assertEqual(server.resolve_formula_redirect(old_id), canon_id)
+            self.assertNotEqual(canon_id, old_id)
+        self.assertIsNone(server.resolve_formula_redirect(777))
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

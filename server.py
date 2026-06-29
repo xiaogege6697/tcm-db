@@ -45,6 +45,52 @@ def _load_allowed_identifiers():
 ALLOWED_COLUMNS = _load_allowed_identifiers()  # {table: {col, ...}}
 ALLOWED_TABLES = set(ALLOWED_COLUMNS.keys())
 
+
+def _load_formula_redirect_map():
+    """启动时从 evidence merged_from 加载 {旧formula_id: canonical_id}。
+    复用去重产物（映射与去重同源，不脱节）；source_record_id 为 TEXT 故严格 int 解析；
+    单射校验：同一旧id指向多个不同canonical→排除该条并告警（不静默）。"""
+    mapping = {}
+    conflicts = []
+    try:
+        conn = get_db()
+        rows = conn.execute(
+            "SELECT source_record_id, subject_id FROM evidence "
+            "WHERE subject_type='formula' AND relation_type='merged_from' "
+            "AND source_record_type='formula' AND source_record_id IS NOT NULL"
+        ).fetchall()
+        conn.close()
+    except Exception as e:
+        print(f"[warn] 加载 formula redirect map 失败: {e}", file=sys.stderr)
+        return mapping
+    for old_raw, canonical in rows:
+        try:
+            old_id = int(old_raw)
+        except (TypeError, ValueError):
+            continue
+        if old_id in mapping and mapping[old_id] != canonical:
+            conflicts.append((old_id, mapping[old_id], canonical))
+            continue  # 单射冲突：排除
+        mapping[old_id] = canonical
+    if conflicts:
+        print(f"[warn] formula redirect 单射冲突已排除: {conflicts}", file=sys.stderr)
+    return mapping
+
+
+# {旧formula_id: canonical_id}，启动加载；去重新增映射后重启生效（无需运行时刷新）
+FORMULA_REDIRECT_MAP = _load_formula_redirect_map()
+
+
+def resolve_formula_redirect(old_id):
+    """旧id→canonical；命中且无循环返回 canonical_id，否则 None。
+    循环保护：canonical 自身也在映射中（成环）→ 拒绝，返回 None。"""
+    canonical = FORMULA_REDIRECT_MAP.get(old_id)
+    if canonical is None:
+        return None
+    if canonical in FORMULA_REDIRECT_MAP:
+        return None  # 循环：拒绝
+    return canonical
+
 def validate_table(table):
     """表名白名单校验；用户输入禁止直接进入 SQL 表名位置"""
     if table not in ALLOWED_TABLES:
@@ -178,11 +224,28 @@ def api_browse(table, page=1, per_page=30, filters=None):
     return {"total": total, "page": page, "per_page": per_page, "data": dict_rows(rows)}
 
 def api_detail(table, id):
-    """查看详情"""
+    """查看详情；formulas 旧id透明重定向到 canonical（200 + _redirected_from/_canonical_id）"""
     validate_table(table)
+    # ID 严格解析：正整数，否则 400（非法请求）；覆盖入参，后续查询统一用此变量
+    try:
+        id = int(id)
+        if id <= 0:
+            raise ValueError
+    except (TypeError, ValueError):
+        raise HttpError(400, 'invalid id')
     conn = get_db()
     row = conn.execute(f"SELECT * FROM {table} WHERE id = ?", (id,)).fetchone()
     d = dict_row(row)
+    if not d and table == 'formulas':
+        # 旧id透明重定向：复用 evidence merged_from 启动缓存（单射+循环保护）
+        canonical = resolve_formula_redirect(id)
+        if canonical is not None:
+            row = conn.execute("SELECT * FROM formulas WHERE id = ?", (canonical,)).fetchone()
+            d = dict_row(row)
+            if d:
+                d['_redirected_from'] = id        # 请求的旧id
+                d['_canonical_id'] = canonical    # 规范id
+                id = canonical                    # 后续 _relations 按 canonical 查询
     if not d:
         conn.close()
         return None
@@ -924,7 +987,7 @@ class TCMHandler(BaseHTTPRequestHandler):
             
             elif path.startswith('/api/detail/'):
                 parts = path.split('/')
-                table, id = parts[3], int(parts[4])
+                table, id = parts[3], parts[4]  # id 严格校验交给 api_detail（非法→400）
                 self.send_json(api_detail(table, id))
             
             elif path.startswith('/api/filter/'):

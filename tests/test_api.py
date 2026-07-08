@@ -22,6 +22,14 @@ import server  # noqa: E402
 class TestSqlInjectionWhitelist(unittest.TestCase):
     """白名单防注入：表名/列名一律走静态白名单，参数值用 ? 占位符"""
 
+    def test_parse_port_is_launch_only(self):
+        self.assertEqual(server.parse_port(['server.py']), 8080)
+        self.assertEqual(server.parse_port(['server.py', '9090']), 9090)
+        with self.assertRaises(SystemExit):
+            server.parse_port(['server.py', 'discover'])
+        with self.assertRaises(SystemExit):
+            server.parse_port(['server.py', '70000'])
+
     def test_allowed_tables_includes_core(self):
         for t in ('herbs', 'formulas', 'symptoms', 'syndromes', 'clinical_cases'):
             self.assertIn(t, server.ALLOWED_TABLES)

@@ -114,6 +114,25 @@ rows = conn.execute("""
 
 本数据库仅供中医学习和研究使用，不构成任何医疗建议。所有内容来源于公开的倪海厦老师课程资料和开源社区整理。如有健康问题，请咨询专业中医师。
 
+## 🧭 维护核心
+
+本项目的出发点是可查询、可审计、可继续维护的中医资料数据底座，而不是自动诊断或处方系统。详细边界见 [`docs/project-core-contract.md`](docs/project-core-contract.md)。
+
+稳定窄腰：
+- `tcm_knowledge.db` 是当前权威产物；在重建链路恢复前，不宣称可从脚本完整复现
+- 查询和审计默认只读；写入型迁移必须有 dry-run、备份、审计和回滚证据
+- 新增数据必须保留来源和人工可复核证据
+- Web API 的表名、列名、文件路径和导出入口继续走白名单/边界检查
+- 输出只服务学习研究，不替代医生诊疗
+
+维护前建议运行：
+
+```bash
+python3 -m unittest discover -s tests -p 'test*.py' -v
+python3 scripts/audit_db.py
+python3 scripts/etl.py --check
+```
+
 ## 📄 许可证
 
 数据来源遵循各原始仓库的许可协议：

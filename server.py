@@ -13,7 +13,20 @@ import mimetypes
 
 DB_PATH = Path(__file__).parent / "tcm_knowledge.db"
 SCREENSHOTS_DIR = Path(__file__).parent / "screenshots"
-PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
+
+
+def parse_port(argv=None):
+    """Parse the optional CLI port only when the server is launched directly."""
+    argv = sys.argv if argv is None else argv
+    if len(argv) <= 1:
+        return 8080
+    try:
+        port = int(argv[1])
+    except ValueError as exc:
+        raise SystemExit(f"端口必须是整数: {argv[1]!r}") from exc
+    if not 1 <= port <= 65535:
+        raise SystemExit(f"端口超出范围: {port}")
+    return port
 
 class HttpError(Exception):
     """HTTP 错误（白名单拒绝/路径穿越等），携带状态码与简短信息"""
@@ -1046,6 +1059,7 @@ class TCMHandler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(data, ensure_ascii=False, default=str).encode('utf-8'))
 
 if __name__ == '__main__':
+    PORT = parse_port()
     print(f"🏥 倪海厦中医知识数据库 - Web 界面")
     print(f"   地址: http://localhost:{PORT}")
     print(f"   数据库: {DB_PATH}")

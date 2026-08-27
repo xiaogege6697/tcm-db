@@ -11,3 +11,4 @@ server.log
 
 # 含本机绝对路径的本地报告（保留本地不删除，但不入库）
 artifacts/local-only/
+tcm_knowledge.db.bak-*

@@ -1,6 +1,12 @@
 # 🏥 倪海厦中医知识数据库 (TCM Knowledge Base)
 
-> 目前开源社区**最全的倪海厦课程结构化数据库**：11 册课程板书 2,987 张逐张 OCR 转录 + 3,867 条结构化知识记录 + 可审计的 SQLite 数据底座。
+> 目前开源社区**最全的倪海厦课程结构化数据库**：11 册课程板书 2,987 张逐张 OCR 转录 + 3,867 条结构化知识记录 + 倪师辨证思维 skill（AI 问诊逻辑）+ 可审计的 SQLite 数据底座。
+
+## 🧠 灵魂搭档：nihaixia-perspective 思维分身
+
+本库不只是「原文弹药库」，还配套一个 **AI 辨证思维分身**（`skills/nihaixia-perspective/`）：从本库 3,867 条记录蒸馏出的倪师思维方式——三层架构（易为体 → 医理转译 → 临床为用）、病势演进轴、阳不入阴、水循环气化、十二时辰流注等辨证推理框架，可直接作为 Claude/LLM 的 system prompt 使用。
+
+**原文数据库 + 问诊逻辑 = 相辅相成**：分身管脑子（怎么辨证思考），数据库管弹药（药性/方剂/医案原文），每条思维都带原文锚点可回库溯源。接入方法见该目录下 `SKILL.md`。
 
 ## ✨ 为什么值得一看
 
@@ -152,6 +158,7 @@ tcm-db/
 ├── tcm_knowledge.db      # SQLite 数据库（权威产物）
 ├── schema_v2.sql         # Schema
 ├── assets/transcripts/   # 11 册板书 OCR 转录（Markdown，按页分节）
+├── skills/nihaixia-perspective/  # 倪师辨证思维分身（AI system prompt，蒸馏自本库）
 ├── 谱系/                  # 知识谱系参考卡（紫极等对照体系，带 books.id 溯源）
 ├── populate.py           # 数据填充脚本（需下载源仓库）
 ├── query_examples.py     # 查询示例代码

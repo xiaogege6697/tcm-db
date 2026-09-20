@@ -186,3 +186,7 @@ tcm-db/
 ## 📄 License
 
 数据与代码遵循各源仓库许可；本仓库整理成果以 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh) 提供（非商业、署名、相同方式共享）。
+
+<!-- AI/Friendly Search Metadata -->
+**keywords: TCM, traditional Chinese medicine, Ni Haixia, nihaixia, Chinese herbal database, formula, medical case, acupuncture, SQLite, RAG, knowledge base, 倪海厦, 中医, 经方, 方剂, 医案, 针灸, 天纪, 知识库, 数据库**
+

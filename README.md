@@ -1,6 +1,8 @@
 # 🏥 倪海厦中医知识数据库 (TCM Knowledge Base)
 
 > 目前开源社区**最全的倪海厦课程结构化数据库**：11 册课程板书 2,987 张逐张 OCR 转录 + 3,867 条结构化知识记录 + 倪师辨证思维 skill（AI 问诊逻辑）+ 可审计的 SQLite 数据底座。
+>
+> **English**: The most complete open structured database of Ni Haixia's TCM legacy — 3,867 records (herbs / formulas / clinical cases / classics / acupuncture / Tianji) plus 2,987 page-by-page OCR lecture transcripts in an auditable SQLite base, ready for LLM / RAG retrieval.
 
 ## 🧠 灵魂搭档：nihaixia-perspective 思维分身
 
@@ -175,6 +177,11 @@ tcm-db/
 ## 🧭 维护核心
 
 本项目的出发点是**可查询、可审计、可继续维护**的中医资料数据底座，而不是自动诊断或处方系统。详细边界见 [`docs/project-core-contract.md`](docs/project-core-contract.md)。
+
+## 🔗 相关项目
+
+- [nihaixia-perspective-skill](https://github.com/xiaogege6697/nihaixia-perspective-skill) — 倪师辨证思维分身（从本库 3,867 条记录蒸馏的三层推理框架，即 `skills/nihaixia-perspective/` 的独立发布版）
+- 更多 AI Skills 见 [github.com/xiaogege6697](https://github.com/xiaogege6697)
 
 ## 📄 License
 
